@@ -10,7 +10,7 @@ use org\Upload;
  */
 class Send extends Common
 {
-	
+// 信息列表
 	public function sow(){
 
         $m=M('message');
