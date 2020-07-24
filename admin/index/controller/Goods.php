@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use \think\Cache;
 use org\Upload;
 class Goods    extends Common
 {
@@ -42,13 +43,80 @@ class Goods    extends Common
     }
 
    
-    //获取分类数据
-    public function product_category_ajax(){
+    /*
+      
+      获取分类数据方法1：
+       */
+   
+   public function product_category_ajax(){
             $m=M('goods_type');
             $data=$m->field('id,pid,name')->select();
-            return json_encode($data);
+            return json_encode($data); 
+        }
 
-    }
+      /*
+      
+      获取分类数据方法2：使用redis缓存产品分类
+      页面需要同步处理，不知道ztree怎么处理
+       */
+   
+    // public function product_category_ajax(){
+    //         // $m=M('goods_type');
+    //         // $data=$m->field('id,pid,name')->select();
+    //         // return json_encode($data);
+        
+    //     // 改用缓存
+    //           $options = [
+    //         'type'  =>  'Redis', // 缓存类型为File
+    //         'expire'=>  200, // 缓存有效期为永久有效
+    //         'prefix'=>  '',//缓存的前缀
+          
+    //     ];
+    //     $redis=Cache::connect($options);
+      
+    //     if(!$redis->get('types1')){
+    //          $m=M('goods_type');
+    //         $type=$m->where("pid=0")->select();//获取一级分类
+    //         $type2=array();
+    //         $type3=array();
+    //         $type4=array();
+    //         foreach($type as $key=>$value){
+    //             $type[$key]['child']=array();//二级分类的名字
+    //             $type2=$m->where("pid=".$value['id'])->select();//获取二级分类
+
+    //             foreach($type2 as $k=>$v){
+                    
+    //                 array_push($type[$key]['child'],$v);//合并一级与二级分类
+    //                 $type[$key]['child'][$k]['child2']=array();////三级分类的名字
+                   
+    //                     $type3=$m->where("pid=".$v['id'])->select();//获取三级分类
+    //                     foreach($type3 as $v2){
+
+
+    //                           array_push($type[$key]['child'][$k]['child2'],$v2);//合并一级二级三级分类
+    //                     }
+                      
+                   
+    //             }
+
+    //         }
+    //         $redis->set('types1',$type);
+
+    //         $data = $type;
+   
+    //         return json_encode($data);
+    //     }else{
+    //         // return $redis->get('types');
+    //         $data = $redis->get('types1');
+    //    // var_dump($data);die;
+    //         return json_encode($data);
+
+
+            
+    //     }
+
+
+    // }
 
     //删除分类信息
     public function product_category_del(){
