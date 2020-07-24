@@ -38,7 +38,7 @@ public function sow(){
     public function types(){
         $options = [
             'type'  =>  'Redis', // 缓存类型为File
-            'expire'=>  7200, // 缓存有效期为永久有效
+            'expire'=>  200, // 缓存有效期为永久有效
             'prefix'=>  '',//缓存的前缀
           
         ];
